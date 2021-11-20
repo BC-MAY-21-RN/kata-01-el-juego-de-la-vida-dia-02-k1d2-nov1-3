@@ -6,10 +6,12 @@ Any dead cell with exactly three live neighbours becomes a live cell.*/
 
 const object = require("../states");
 const { ALIVE, DEAD } = object;
+
 module.exports = class Cell {
   constructor() {
     this.ALIVE = ALIVE;
     this.DEAD = DEAD;
+    this.NumLifeCells = 0;
   }
 
   createCells() {
@@ -19,11 +21,26 @@ module.exports = class Cell {
     if (porcentaje >= 1 && porcentaje <= 6) {
       // "." -> muertos 60%
       // "O" -> vivos   40%
-        return this.DEAD;
+      return this.DEAD;
     } else {
-        return this.ALIVE;
+      return this.ALIVE;
     }
   }
 
+  newGeneration(NumLifeCells, celula) {
 
-}
+    if(celula == "O" && NumLifeCells < 2 ){
+      return DEAD
+    }else if(celula == "O" && NumLifeCells > 3){
+      return DEAD
+    }else if(celula == "O" && (NumLifeCells == 2 || NumLifeCells == 3)){
+      return ALIVE
+    }else if(celula == "." && NumLifeCells == 3){
+      return ALIVE
+    }else if(celula == "." && NumLifeCells != 3){
+      return DEAD
+    }
+  }
+};
+//CICLO INFINITO
+//for (var i = 0; i < Infinity; i++) {}
